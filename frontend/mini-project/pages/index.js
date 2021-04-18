@@ -1,65 +1,84 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import useSWR, { mutate } from 'swr'
 
+
+const URL = `http://localhost/api/students`
+const fetcher = url => axios.get(url).then(res => res.data) 
 export default function Home() {
+
+  // const [students, setStudents] = useState({
+  //   list: [
+  //     { id: 1, name: 'Thanan', surname : 'Chairat' , major : 'CoE', GPA : 3.11 }
+  //   ]
+  // })
+
+  const [student, setStudent] = useState([])
+  const [name,setName] = useState('')
+  const [surname,setSurname] = useState('')
+  const [major,setMajor] = useState('')
+  const [GPA,setGPA] = useState(0)
+  
+  const {data,error} = useSWR(URL,fetcher)
+  if(!data)
+  {
+      return <div>Loading ...</div>
+  }
+
+  const addStudent = async (name,surname,major, GPA) =>{
+    let students = await axios.post(URL , {name,surname,major, GPA})
+    mutate(URL)
+  }
+
+  const getStudents = async () => {
+    let student = await axios.get(URL)
+    mutate(URL)
+    
+  }
+
+  const printStudents = (students) =>{
+    if( students && students.length)
+    return (students.map((item, index) => 
+          <li key = {index}>
+            {index + 1 }:
+            {(item) ? item.name : "-"}:
+            {(item) ? item.surname : "-"}:
+            {(item) ? item.major : "-"}:
+            {(item) ? item.GPA : 0}
+            <button onClick={() => getStudent(item.id)}>Get</button>
+            <button onClick={() => updateStudent(item.id)}>Update</button>
+            <button onClick={() => deleteStudent(item.id)}>Delete</button>
+          </li>))
+    else
+      return (<li>No Student</li>)
+  }
+
+  const deleteStudent = async (id) => {
+    let students = await axios.delete(`${URL}/${id}`)
+    mutate(URL)
+  }
+
+  const updateStudent = async (id) => {
+    let students = await axios.put(`${URL}/${id}`,{name,surname,major,GPA})
+    mutate(URL)
+  }
+
+  const getStudent = async (id) => {
+    const student = await axios.get(`${URL}/${id}`)
+    setStudent({ name: student.data.name , surname: student.data.surname, major: student.data.major, GPA: student.data.GPA })
+  }
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div> Students
+      <ul>{printStudents(data.list)}</ul>
+      selected student: {student.name} {student.surname} {student.major} {student.GPA}
+      <h2>Add student</h2>
+          Name : <input type="text" onChange={(e)=>setName(e.target.value)} /> <br/>
+          Surname : <input type="text" onChange={(e)=>setSurname(e.target.value)} /> <br/>
+          Major : <input type="text" onChange={(e)=>setMajor(e.target.value)} /> <br/>
+          GPA : <input type="number" onChange={(e)=>setGPA(e.target.value)} /> <br/>
+          <button onClick={ () => addStudent(name,surname,major,GPA)}>Add New Student</button>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }
