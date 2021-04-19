@@ -6,10 +6,10 @@ const PORT = 80
 let cors = require('cors');
 app.use(cors());
 
-let students = {
+let premiumCars = {
     list: [ 
-        {id: 6135512019 , name: "Thanan" , surname: "Chairat" , major: "CoE", GPA: 4.33}, 
-        {id: 1234567891 , name: "Aaaaaa" , surname: "Bbbbbbb" , major: "SE", GPA: 2.87} 
+        {id: 1234 , brand: "BMW" , model: "series 3" , year: "2021", price: 2699000}, 
+        {id: 1235, brand: "Mercedes Benz" , model: "c-class" , year: "2021", price: 2479000} 
     ]
 }
 
@@ -20,59 +20,59 @@ app.use('/api', bodyParser.urlencoded({ extended: false }), router);
 
 
 app.use('/api',router)
-router.route('/students')
-    .get((req,res) => res.json(students))
+router.route('/premiumCars')
+    .get((req,res) => res.json(premiumCars))
     .post((req,res) => {
-        let id = (students.list.length)?students.list[students.list.length-1].id+1:1
+        let id = (premiumCars.list.length)?premiumCars.list[premiumCars.list.length-1].id+1:1
         id = req.body.id
-        let newStudent = {}
-        newStudent.id = (students.list.length)?students.list[students.list.length - 1].id + 1:1
-        newStudent.name = req.body.name
-        newStudent.surname = req.body.surname
-        newStudent.major = req.body.major
-        newStudent.GPA = req.body.GPA
-        students = { "list": [...students.list, newStudent] }
-        res.json(students)
+        let newPremiumCar = {}
+        newPremiumCar.id = (premiumCars.list.length)?premiumCars.list[premiumCars.list.length - 1].id + 1:1
+        newPremiumCar.brand = req.body.brand
+        newPremiumCar.model = req.body.model
+        newPremiumCar.year = req.body.year
+        newPremiumCar.price = req.body.price
+        premiumCars = { "list": [...premiumCars.list, newPremiumCar] }
+        res.json(premiumCars)
     })
-router.route('/students/:student_id')
+router.route('/premiumCars/:premiumCar_id')
     .get((req,res) => {
-        let id = students.list.findIndex((item) => (item.id === +req.params.student_id))
+        let id = premiumCars.list.findIndex((item) => (item.id === +req.params.premiumCar_id))
         if(id === -1)
         {
             res.send("No ID (SHOW)")
         }
         else
         { 
-            res.json(students.list[id])
+            res.json(premiumCars.list[id])
         }
            
         
     })
     .put((req,res) => {
-        let id = students.list.findIndex((item) => (item.id === +req.params.student_id))
+        let id = premiumCars.list.findIndex((item) => (item.id === +req.params.premiumCar_id))
         if(id === -1)
         {
             res.send("No ID (UPDDATE)")
         }
         else
         {
-            students.list[id].name = req.body.name
-            students.list[id].surname = req.body.surname
-            students.list[id].major = req.body.major
-            students.list[id].GPA = req.body.GPA
-            res.json(students)
+            premiumCars.list[id].brand = req.body.brand
+            premiumCars.list[id].model = req.body.model
+            premiumCars.list[id].year = req.body.year
+            premiumCars.list[id].price = req.body.price
+            res.json(premiumCars)
         }
     })
     .delete( (req,res) => {
-        let id = students.list.findIndex((item) => (item.id === +req.params.student_id))
+        let id = premiumCars.list.findIndex((item) => (item.id === +req.params.premiumCar_id))
         if(id === -1)
         {
             res.send("No ID (DELETE)")
         }
         else
         {
-            students.list = students.list.filter( item => item.id !== +req.params.student_id)
-            res.json(students)
+            premiumCars.list = premiumCars.list.filter( item => item.id !== +req.params.premiumCar_id)
+            res.json(premiumCars)
         }
         
     })
