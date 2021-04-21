@@ -43,7 +43,7 @@ const showPremiumCar = ({ token }) => {
 	return (
 	    <Layout>
             <Head>
-                <title>Premium Cars </title>
+                <title>Premium Cars List</title>
             </Head>
             <div>
                 <Navbar/>
