@@ -3,6 +3,7 @@ import Layout from '../components/layout'
 import { useState } from 'react'
 import Navbar from '../components/navbar'
 import styles from '../styles/Home.module.css'
+import style from '../styles/Login.module.css'
 import axios from 'axios'
 import config from '../config/config'
 
@@ -62,7 +63,7 @@ export default function Login({ token }) {
             <Head>
                 <title>Login</title>
             </Head>
-            <div className={styles.container}>
+            <div className={style.submit}>
                 <Navbar />
                 <h1>Login</h1>
                 <div><b>Token:</b> {token.substring(0, 15)}...
