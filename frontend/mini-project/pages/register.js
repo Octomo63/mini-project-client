@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import Navbar from '../components/navbar'
 import axios from 'axios'
 import config from '../config/config'
+import style from '../styles/Login.module.css'
 
 export default function Register({ token }) {
 
@@ -61,7 +62,7 @@ export default function Register({ token }) {
                 Password:
             </div>
             <div>
-                <input type="password"
+                <input type="password" 
                     name="password"
                     placeholder="password"
                     onChange={(e) => setPassword(e.target.value)} />
@@ -80,7 +81,7 @@ export default function Register({ token }) {
                 <Navbar />
                 <h1>Register</h1>
                 <div><b>Token:</b> {token.substring(0, 15)}...
-                <button
+                <button className = {style.submit}
                         onClick={() => { navigator.clipboard.writeText(token) }}>
                         Copy token
                 </button>
@@ -93,7 +94,7 @@ export default function Register({ token }) {
                 </div>
 
                 <div>
-                    <button onClick={register}>Register</button>
+                    <button className = {style.submit} onClick={register}>Register</button>
                 </div>
             </div>
         </Layout>

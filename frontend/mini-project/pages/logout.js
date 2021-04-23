@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import axios from 'axios'
 import config from '../config/config'
+import style from '../styles/Login.module.css'
 
 export default function Logout({ token }) {
 

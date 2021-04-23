@@ -3,6 +3,7 @@ import Head from 'next/head'
 import config from '../config/config'
 import styles from '../styles/Home.module.css'
 import Navbar from '../components/navbar'
+import style from '../styles/Login.module.css'
 
 const GetConfig = () => {
     return (<Layout>

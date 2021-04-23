@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import axios from 'axios'
 import withAuth from '../components/withAuth'
 import config from '../config/config'
+import style from '../styles/Login.module.css'
 
 const Profile1 = ({ token }) => {
 
