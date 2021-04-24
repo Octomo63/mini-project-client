@@ -42,7 +42,7 @@ export default function Register({ token }) {
             <div>
                 Username:
             </div>
-            <div>
+            <div className = {style.text1}>
                 <input type="text"
                     name="username"
                     placeholder="username"
@@ -52,7 +52,7 @@ export default function Register({ token }) {
             <div>
                 Email:
             </div>
-            <div>
+            <div >
                 <input type="email"
                     name="email"
                     placeholder="email"
@@ -77,17 +77,17 @@ export default function Register({ token }) {
             <Head>
                 <title>Register</title>
             </Head>
-            <div className={styles.container}>
+            <div className={styles.container} className = {styles.bg}>
                 <Navbar />
-                <h1>Register</h1>
-                <div><b>Token:</b> {token.substring(0, 15)}...
+                <h1 className = {style.text} >Register</h1>
+                <div><b className = {style.text1}>Token:</b> {token.substring(0, 15)}...
                 <button className = {style.submit}
                         onClick={() => { navigator.clipboard.writeText(token) }}>
                         Copy token
                 </button>
                 </div>
                 <br />
-            Status:  {status}
+            <div className = {style.text1}>Status:  {status}</div>
                 <br /><br />
                 <div className={styles.content}>
                     {registerForm()}

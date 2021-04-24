@@ -3,9 +3,10 @@ import Layout from '../components/layout'
 import Navbar from '../components/navbar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import withAuth from '../components/withAuth'
+import CarAuth from '../components/CarAuth'
 import config from '../config/config'
 import style from '../styles/Login.module.css'
+import styles from '../styles/Home.module.css'
 
 const URL = `${config.URL}/premiumCars`
 const changeDetails = ({ token }) => {
@@ -38,37 +39,32 @@ const changeDetails = ({ token }) => {
     
   }
 
-  const printPremiumCars = (premiumCar) =>{
-    if( premiumCar && premiumCar.length)
-    return (premiumCar.map((item, index) => 
+  const printPremiumCars = () =>{
+    if( premiumCars.list && premiumCars.list.length)
+    return (premiumCars.list.map((premiumCar, index) => 
           <li key = {index}>
             {index + 1 }:
-            {(item) ? item.brand : "-"}:
-            {(item) ? item.model : "-"}:
-            {(item) ? item.year : "-"}:
-            {(item) ? item.price : 0}
-            <button onClick={() => getPremiumCar(item.id)}>Get</button>
-            <button onClick={() => updatePremiumCar(item.id)}>Update</button>
-            <button onClick={() => deletePremiumCar(item.id)}>Delete</button>
+            {(premiumCar) ? premiumCar.brand : "-"}:
+            {(premiumCar) ? premiumCar.model : "-"}:
+            {(premiumCar) ? premiumCar.year : "-"}:
+            {(premiumCar) ? premiumCar.price : 0}
+            <button className = {style.submit}  onClick={() => updatePremiumCar(premiumCar.id)}>Update</button>
+            <button className = {style.submit}  onClick={() => deletePremiumCar(premiumCar.id)}>Delete</button>
           </li>))
     else
       return (<li>No Premium Car</li>)
   }
 
   const deletePremiumCar = async (id) => {
-    let premiumCar = await axios.delete(`${URL}/${id}`)
+    let premiumCars = await axios.delete(`${URL}/${id}`)
     setPremiumCars(premiumCars.data)
   }
 
   const updatePremiumCar = async (id) => {
-    let premiumCar = await axios.put(`${URL}/${id}`,{brand,model,year,price})
+    let premiumCars = await axios.put(`${URL}/${id}`,{brand,model,year,price})
     setPremiumCars(premiumCars.data)
   }
 
-  const getPremiumCar = async (id) => {
-    const premiumCar = await axios.get(`${URL}/${id}`)
-    setPremiumCars({ brand: premiumCar.data.brand , model: premiumCar.data.model, year: premiumCar.data.year, price: premiumCar.data.price })
-  }
 
   return (
     
@@ -76,25 +72,26 @@ const changeDetails = ({ token }) => {
      <Head>
          <title>Premium Car List</title>
      </Head>
-     <div >
+     <div className = {styles.bg}>
          <Navbar />
          {JSON.stringify(premiumCars.premiumCars)}
-         <ul >
+         <ul className = {style.text1}>
              {printPremiumCars()}
          </ul>
-         <h2>Add Premium Car</h2>
-         <div>
-          Brand : <input type="text" onChange={(e)=>setBrand(e.target.value)} /> <br/>
-          model : <input type="text" onChange={(e)=>setModel(e.target.value)} /> <br/>
-          Year : <input type="text" onChange={(e)=>setYear(e.target.value)} /> <br/>
-          Price : <input type="number" onChange={(e)=>setPrice(e.target.value)} /> <br/>
-          <button onClick={ () => addPremiumCar(brand,model,year,price)}>Add New Premium Car</button>
+         <br/>
+         <h2 className = {style.text}>Add Premium Car</h2>
+         <div className = {styles.container}>
+          <div className = {style.text} >Brand : </div><input type="text" onChange={(e)=>setBrand(e.target.value)} /> 
+          <div className = {style.text} >Model : </div> <input type="text" onChange={(e)=>setModel(e.target.value)} /> 
+          <div className = {style.text} >Year : </div><input type="text" onChange={(e)=>setYear(e.target.value)} /> 
+          <div className = {style.text} >Price : </div> <input type="number" onChange={(e)=>setPrice(e.target.value)} /> <br/>
+          <button className = {style.submit} onClick={ () => addPremiumCar(brand,model,year,price)}>Add New Premium Car</button>
          </div>
      </div>
  </Layout>
   )
 }
-export default withAuth(changeDetails)
+export default CarAuth(changeDetails)
 export function getServerSideProps({ req, res }) {
     return { props: { token: req.cookies.token || "" } };
 }

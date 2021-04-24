@@ -3,10 +3,10 @@ import Layout from '../components/layout'
 import Navbar from '../components/navbar'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
+import style from '../styles/login.module.css'
 import axios from 'axios'
-import withAuth from '../components/withAuth'
+import CarAuth from '../components/CarAuth'
 import config from '../config/config'
-import style from '../styles/Login.module.css'
 
 const URL = `${config.URL}/premiumCars`
 const showPremiumCar = ({ token }) => {
@@ -31,10 +31,10 @@ const showPremiumCar = ({ token }) => {
 			if (premiumCars.list && premiumCars.list.length)
 				return (premiumCars.list.map((premiumCar, index) =>
 				(<li key={index} className={styles.listItem}>
-				Name : {(premiumCar) ? premiumCar.brand : '-'} <br></br>
-				Surname : {(premiumCar) ? premiumCar.model : '-'}  <br></br>
-				Major : {(premiumCar) ? premiumCar.year : '-'}  <br></br>
-				GPA : {(premiumCar) ? premiumCar.price : '-'}  <br></br> 
+				Brand : {(premiumCar) ? premiumCar.brand : '-'} <br></br>
+				Model : {(premiumCar) ? premiumCar.model : '-'}  <br></br>
+				Year : {(premiumCar) ? premiumCar.year : '-'}  <br></br>
+				Price : {(premiumCar) ? premiumCar.price : '-'}  <br></br> 
 				</li>)
 				))
 			else {
@@ -46,10 +46,10 @@ const showPremiumCar = ({ token }) => {
             <Head>
                 <title>Premium Cars List</title>
             </Head>
-            <div>
+            <div className={styles.container} className = {styles.bg}>
                 <Navbar/>
                 {JSON.stringify(premiumCars.premiumCars)}
-                <ul>
+                <ul className = {style.text1}>
                     {printPremiumCars()}
                 </ul>
                 
@@ -58,7 +58,7 @@ const showPremiumCar = ({ token }) => {
 	)
 }
 
-export default withAuth(showPremiumCar)
+export default CarAuth(showPremiumCar)
 export function getServerSideProps({ req, res }) {
     return { props: { token: req.cookies.token || "" } };
 }

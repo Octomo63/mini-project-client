@@ -1,5 +1,5 @@
 .container {
-  min-height: 100vh;
+  min-height: 100%;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
@@ -32,4 +32,14 @@
   margin: 0px 0;
   box-sizing: border-box;
   font-size: 1.2rem;
+}
+.bg{
+  background-color:rgb(94, 149, 250);
+  padding-top: 80px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 80px;
+  position: absolute; 
+  min-width: 100%;
+  min-height: 80%;
 }

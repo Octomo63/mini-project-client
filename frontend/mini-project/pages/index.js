@@ -11,10 +11,10 @@ export default function Home({ token }) {
     <Head>
         <title>First Page</title>
     </Head>
-    <div className={styles.container}>
+    <div className={styles.container} className = {styles.bg}>
         <Navbar />
-        <h1>Home page</h1>
-        No login required!
+        <h1 className = {style.text}>Home page</h1> <br></br>
+        <div className = {style.text1}>No login required!</div>
     </div>
 </Layout>
   )

@@ -36,16 +36,19 @@ const Profile1 = ({ token }) => {
             <Head>
                 <title>User profile</title>
             </Head>
-            <div className={styles.container}>
+            <div className={styles.container} className = {styles.bg}>
                 <Navbar />
-                <h1>User profile</h1>
-                <div>
-                    <b>Token:</b> {token.substring(0, 15)}... <br /><br />
-                    This route is protected by token, user is required to login first.
-                    <br/>
-                    Otherwise, it will be redirect to Login page
-                    <br/><br/>
-                    {JSON.stringify(user)}
+                <h1 className = {style.text}>User profile</h1>
+                <div >
+                    <b className = {style.text1}>Token:</b> {token.substring(0, 15)}... <br /><br />
+                    <div className = {style.text2}>
+                        This route is protected by token, user is required to login first.
+                        <br/>
+                        Otherwise, it will be redirect to Login page
+                        <br/><br/>
+                        {JSON.stringify(user)}
+                    </div>
+                    
                 </div>
             </div>
         </Layout>

@@ -35,7 +35,7 @@ export default function Login({ token }) {
             <div>
                 Username:
             </div>
-            <div>
+            <div >
                 <input type="text"
                     name="username"
                     placeholder="username"
@@ -45,7 +45,7 @@ export default function Login({ token }) {
             <div>
                 Password:
             </div>
-            <div>
+            <div >
                 <input type="password"
                     name="password"
                     placeholder="password"
@@ -63,14 +63,14 @@ export default function Login({ token }) {
             <Head>
                 <title>Login</title>
             </Head>
-            <div className={style.container}>
-                <Navbar />
-                <h1>Login</h1>
-                <div><b>Token:</b> {token.substring(0, 15)}...
+            <div className={styles.container} className = {styles.bg}>
+                <Navbar /> 
+                <h1 className = {style.text}>Login</h1>
+                <div><b className = {style.text1}>Token:</b> {token.substring(0, 15)}...
                 <button className = {style.submit} onClick={copyText}> Copy token </button>
                 </div>
                 <br/>
-                <div>
+                <div className = {style.text1}>
                     Status:  {status} {RememberMe}
                 </div>
                 <br />
@@ -78,7 +78,7 @@ export default function Login({ token }) {
                 <div>
                     <button className = {style.submit} onClick={login}>Login</button>
                 </div>
-                <div>
+                <div className = {style.text1}>
                 <input type="checkbox"
                     name="RememberMe"
                     onChange = {(e) => setRememberMe(e.target.value)} /> Remember Me
