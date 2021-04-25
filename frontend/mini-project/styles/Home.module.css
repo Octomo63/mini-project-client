@@ -41,5 +41,13 @@
   padding-bottom: 80px;
   position: absolute; 
   min-width: 100%;
-  min-height: 80%;
+  min-height: 100%;
+}
+.icon{
+  height: 25px;
+  width: 25px;
+}
+.icon1{
+  height: 30px;
+  width: 30px;
 }
